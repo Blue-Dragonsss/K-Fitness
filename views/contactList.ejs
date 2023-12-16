@@ -1,34 +1,41 @@
 <%-include('header.ejs')%>
 
+<link rel="stylesheet" href="/styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <div style="text-align: center;">
 
-    <h1>문의받은 내용들</h1>
+    <h1>F&Q</h1>
 
-    <table border=1 style="margin: 0 auto;">
-        <tr>
-            <th>idx</th>
-            <th>성명</th>
-            <th>연락처</th>
-            <th>이메일</th>
-            <th>문의내용</th>
-            <th>등록일</th>
-            <th>삭제</th>      
-        </tr>
+    <div class="contactlist">
+        <div class="accordion">
 
-        <% lists.forEach(function(item){ %>
-        
-        <tr>
-            <td> <%=item.idx%> </td>
-            <td> <%=item.name%> </td>
-            <td> <%=item.phone%> </td>
-            <td> <%=item.email%> </td>
-            <td> <%-item.memo.replaceAll("\n", "<br>")%> </td>
-            <td> <%=item.regdate%> </td>
-            <td> <a href="/contactDelete?idx=<%=item.idx%>" onclick="return confirm('정말 삭제할까요?')">삭제</a></td>
-        </tr>
+            <div style="text-align: right; margin-right: 0vw;">
+                <button onclick="writing()">글 작성하기</button>
+            </div>
 
-        <% }) %>
-    </table>
+            <% lists.forEach(function(item){ %>
+
+            <div class="accordion-content">
+
+                <header>
+                    <span class="title"> 문의: <%=item.idx%> </span>
+                    <i class="fa-solid fa-plus"></i>
+                </header>
+
+                <p class="description">
+                    <a class="i">∙ <%=item.name%><br></a>
+                    <a class="i">∙ <%=item.phone%><br></a>
+                    <a class="i">∙ <%=item.email%><br><br></a>
+                    <%-item.memo.replaceAll("\n", "<br><br>")%>
+                    <br><a class="delete" href="/contactDelete?idx=<%=item.idx%>" onclick="return confirm('정말 삭제할까요?')">[삭제]</a>
+                </p>
+            </div>
+            
+            <% }) %>
+
+        </div>
 </div>
 
+<script src="contactList.js"></script>
 <%-include('footer.ejs')%>
